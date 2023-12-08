@@ -24,7 +24,7 @@ public class TrybankLib
     // 1. Construa a funcionalidade de cadastrar novas contas
     public void RegisterAccount(int number, int agency, int pass)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); 
     }
 
     // 2. Construa a funcionalidade de fazer Login
