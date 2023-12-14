@@ -12,6 +12,10 @@ public class TrybankLib
     public int[,] Bank;
     public int registeredAccounts;
     private int maxAccounts = 50;
+    private int accNumberIndex = 0;
+    private int accAgencyIndex = 1;
+    private int accPasswordIndex = 2;
+    private int accBalanceIndex = 3;
 
     public TrybankLib()
     {
