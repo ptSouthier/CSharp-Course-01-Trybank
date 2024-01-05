@@ -12,10 +12,11 @@ public class TrybankLib
     private int accAgencyIndex = 1;
     private int accPasswordIndex = 2;
     private int accBalanceIndex = 3;
+    private int noUserLoggedValue = -99;
 
     public TrybankLib()
     {
-        loggedUser = -99;
+        loggedUser = noUserLoggedValue;
         registeredAccounts = 0;
         Logged = false;
         Bank = new int[maxAccounts, 4];
@@ -87,7 +88,7 @@ public class TrybankLib
         else
         {
             Logged = false;
-            loggedUser = -99;
+            loggedUser = noUserLoggedValue;
         }
     }
 
