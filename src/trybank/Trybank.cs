@@ -46,7 +46,35 @@ public class TrybankLib
     // 2. Construa a funcionalidade de fazer Login
     public void Login(int number, int agency, int pass)
     {
-        throw new NotImplementedException();
+        if (Logged)
+        {
+            throw new AccessViolationException("Usuário já está logado");
+        }
+
+        for (int index = 0; index < registeredAccounts; index += 1)
+        {
+            int accNumber = Bank[index, accNumberIndex];
+            int accAgency = Bank[index, accAgencyIndex];
+            int accPassword = Bank[index, accPasswordIndex];
+
+            if (number == accNumber && agency == accAgency)
+            {
+                if (pass == accPassword)
+                {
+                    Logged = true;
+                    loggedUser = index;
+                }
+                else if (pass != accPassword)
+                {
+                    throw new ArgumentException("Senha incorreta");
+                }
+            }
+        }
+
+        if (!Logged && loggedUser < 0)
+        {
+            throw new ArgumentException("Agência + Conta não encontrada");
+        }
     }
 
     // 3. Construa a funcionalidade de fazer Logout
