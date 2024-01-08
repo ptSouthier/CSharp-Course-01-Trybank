@@ -145,7 +145,33 @@ public class TrybankLib
     // 7. Construa a funcionalidade de transferir dinheiro entre contas
     public void Transfer(int destinationNumber, int destinationAgency, int value)
     {
-        throw new NotImplementedException();
+        if (!Logged)
+        {
+            throw new AccessViolationException("Usuário não está logado");
+        }
+        else
+        {
+            int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
+            int accBalanceAfterTransfer = loggedUserAccBalance - value;
+            if (accBalanceAfterTransfer < 0)
+            {
+                throw new InvalidOperationException("Saldo insuficiente");
+            }
+            else
+            {
+                for (int index = 0; index < registeredAccounts; index += 1)
+                {
+                    int accNumber = Bank[index, accNumberIndex];
+                    int accAgency = Bank[index, accAgencyIndex];
+                    if (destinationNumber == accNumber && destinationAgency == accAgency)
+                    {
+                        int destinationAccountBalance = Bank[index, accBalanceIndex];
+                        Bank[loggedUser, accBalanceIndex] = accBalanceAfterTransfer;
+                        Bank[index, accBalanceIndex] = destinationAccountBalance + value;
+                    }
+                }
+            }
+        }
     }
 
    
