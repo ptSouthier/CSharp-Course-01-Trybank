@@ -159,6 +159,8 @@ public class TrybankLib
             }
             else
             {
+                bool successfulTransfer = false;
+                
                 for (int index = 0; index < registeredAccounts; index += 1)
                 {
                     int accNumber = Bank[index, accNumberIndex];
@@ -168,7 +170,13 @@ public class TrybankLib
                         int destinationAccountBalance = Bank[index, accBalanceIndex];
                         Bank[loggedUser, accBalanceIndex] = accBalanceAfterTransfer;
                         Bank[index, accBalanceIndex] = destinationAccountBalance + value;
+                        successfulTransfer = true;
                     }
+                }
+
+                if (!successfulTransfer)
+                {
+                    throw new InvalidOperationException("Conta destino inexistente");
                 }
             }
         }
