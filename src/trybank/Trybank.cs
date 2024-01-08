@@ -78,106 +78,89 @@ public class TrybankLib
         }
     }
 
-    // 3. Construa a funcionalidade de fazer Logout
-    public void Logout()
+    private void VerifyLogged()
     {
         if (!Logged)
         {
             throw new AccessViolationException("Usuário não está logado");
         }
-        else
-        {
-            Logged = false;
-            loggedUser = noUserLoggedValue;
-        }
+    }
+
+    // 3. Construa a funcionalidade de fazer Logout
+    public void Logout()
+    {
+        VerifyLogged();
+        
+        Logged = false;
+        loggedUser = noUserLoggedValue;
     }
 
     // 4. Construa a funcionalidade de checar o saldo
     public int CheckBalance()
     {
-        if (!Logged)
-        {
-            throw new AccessViolationException("Usuário não está logado");
-        }
-        else
-        {
-            int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
-            return loggedUserAccBalance;
-        }
+        VerifyLogged();
+
+        int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
+        return loggedUserAccBalance;
     }
 
     // 5. Construa a funcionalidade de depositar dinheiro
     public void Deposit(int value)
     {
-        if (!Logged)
-        {
-            throw new AccessViolationException("Usuário não está logado");
-        }
-        else
-        {
-            int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
-            Bank[loggedUser, accBalanceIndex] = value + loggedUserAccBalance;
-        }
+        VerifyLogged();
+
+        int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
+        Bank[loggedUser, accBalanceIndex] = value + loggedUserAccBalance;
     }
 
     // 6. Construa a funcionalidade de sacar dinheiro
     public void Withdraw(int value)
     {
-        if (!Logged)
+        VerifyLogged();
+
+        int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
+        int accBalanceAfterWithdraw = loggedUserAccBalance - value;
+        if (accBalanceAfterWithdraw < 0)
         {
-            throw new AccessViolationException("Usuário não está logado");
+            throw new InvalidOperationException("Saldo insuficiente");
         }
         else
         {
-            int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
-            int accBalanceAfterWithdraw = loggedUserAccBalance - value;
-            if (accBalanceAfterWithdraw < 0)
-            {
-                throw new InvalidOperationException("Saldo insuficiente");
-            }
-            else
-            {
-                Bank[loggedUser, accBalanceIndex] = accBalanceAfterWithdraw;
-            }
+            Bank[loggedUser, accBalanceIndex] = accBalanceAfterWithdraw;
         }
     }
 
     // 7. Construa a funcionalidade de transferir dinheiro entre contas
     public void Transfer(int destinationNumber, int destinationAgency, int value)
     {
-        if (!Logged)
+        VerifyLogged();
+
+        int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
+        int accBalanceAfterTransfer = loggedUserAccBalance - value;
+        if (accBalanceAfterTransfer < 0)
         {
-            throw new AccessViolationException("Usuário não está logado");
+            throw new InvalidOperationException("Saldo insuficiente");
         }
         else
         {
-            int loggedUserAccBalance = Bank[loggedUser, accBalanceIndex];
-            int accBalanceAfterTransfer = loggedUserAccBalance - value;
-            if (accBalanceAfterTransfer < 0)
+            bool successfulTransfer = false;
+            
+            for (int index = 0; index < registeredAccounts; index += 1)
             {
-                throw new InvalidOperationException("Saldo insuficiente");
+                int accNumber = Bank[index, accNumberIndex];
+                int accAgency = Bank[index, accAgencyIndex];
+                if (destinationNumber == accNumber && destinationAgency == accAgency)
+                {
+                    int destinationAccountBalance = Bank[index, accBalanceIndex];
+                    Bank[loggedUser, accBalanceIndex] = accBalanceAfterTransfer;
+                    Bank[index, accBalanceIndex] = destinationAccountBalance + value;
+                    successfulTransfer = true;
+                }
             }
-            else
-            {
-                bool successfulTransfer = false;
-                
-                for (int index = 0; index < registeredAccounts; index += 1)
-                {
-                    int accNumber = Bank[index, accNumberIndex];
-                    int accAgency = Bank[index, accAgencyIndex];
-                    if (destinationNumber == accNumber && destinationAgency == accAgency)
-                    {
-                        int destinationAccountBalance = Bank[index, accBalanceIndex];
-                        Bank[loggedUser, accBalanceIndex] = accBalanceAfterTransfer;
-                        Bank[index, accBalanceIndex] = destinationAccountBalance + value;
-                        successfulTransfer = true;
-                    }
-                }
 
-                if (!successfulTransfer)
-                {
-                    throw new InvalidOperationException("Conta destino inexistente");
-                }
+            if (!successfulTransfer)
+            {
+                throw new InvalidOperationException("Conta destino inexistente");
             }
         }
     }
