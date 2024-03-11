@@ -7,7 +7,7 @@
   
   ## Welcome to <b>`Trybank`</b> Project
   `Trybank` is a study project of the <b>"C# Acceleration"</b> course at [Trybe](https://www.betrybe.com/). This repository was created to have access to this and future completed projects on my GitHub profile, enabling a future reference for comparison. <br><br>
-  The project's goal is to put into practice the concepts studied during a specific module of the course, developing methods and functionalities within certain files, and meeting the requirements outlined in the original project's README.
+  The project's goal is to put into practice the concepts studied during module 2 - "Fundamentals and Resources of the C# Language" - of the course, developing methods and functionalities within certain files, and meeting the requirements outlined in the original project's README.
 </details>
 
 <details open>
@@ -17,14 +17,14 @@
   
   ## Boas-vindas ao Projeto <b>`Trybank`</b>
   `Trybank` é um projeto de estudo presente no curso <b>"Aceleração C#"</b> da [Trybe](https://www.betrybe.com/), e este repositório foi criado com o intuito de possuir em meu perfil do GitHub o acesso a este e aos próximos projetos concluídos, possibilitando uma futura referência para comparação. <br><br>
-  O objetivo do projeto é de pôr em prática os conceitos estudados no decorrer de determinado módulo do curso, desenvolvendo os métodos e funcionalidades presentes em determinados arquivos e cumprindo os requisitos estabelecidos no README original do projeto.
+  O objetivo do projeto é de pôr em prática os conceitos estudados no decorrer do módulo 2 - "Fundamentos e Recursos da Linguagem C#" - do curso, desenvolvendo os métodos e funcionalidades presentes em determinados arquivos e cumprindo os requisitos estabelecidos no README original do projeto.
 </details>
 
 <br>
 <details>
   <summary><b>Project README | README do Projeto</b></summary>
-  
-  Para realizar o projeto, atente-se a cada passo descrito a seguir, e se tiver **qualquer dúvida**, nos envie no _Slack_ da turma! #vqv 🚀
+
+  <br>
   
   Aqui, você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir desse repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
   
